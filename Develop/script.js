@@ -1,5 +1,5 @@
 // declare variables
-var lengthPerference = 0;
+var lengthPreference = 0;
 var uppercasePreference = true;
 var lowercasePreference = true;
 var numericPreference = true;
@@ -13,14 +13,14 @@ var specialCharacters = ["!","@", "#", "$", "%","&", "*", "_", "-","?"];
 var generatePassword = function() {
 
   // prompt asking for character length
-  lengthPerference = parseInt(window.prompt("How long do you want your password to be? Please enter number between 8 and 128."))
-  if (!Number.isInteger(lengthPerference) || lengthPerference < 8 || lengthPerference > 128) {
+  lengthPreference = parseInt(window.prompt("How long do you want your password to be? Please enter number between 8 and 128."))
+  if (!Number.isInteger(lengthPreference) || lengthPreference < 8 || lengthPreference > 128) {
     alert("Error: please enter a valid numeric value between 8 and 128");
   }
-  while (!(Number.isInteger(lengthPerference)) || lengthPerference < 8 || lengthPerference > 128) {
-    lengthPerference = parseInt(window.prompt("Please enter number between 8 and 128."))
-    console.log(lengthPerference);
-    if (!lengthPerference) //why not cancelling??
+  while (!(Number.isInteger(lengthPreference)) || lengthPreference < 8 || lengthPreference > 128) {
+    lengthPreference = parseInt(window.prompt("Please enter number between 8 and 128."))
+    console.log(lengthPreference);
+    if (!lengthPreference) //why not cancelling??
     return ;
   }
 
@@ -60,8 +60,8 @@ var generatePassword = function() {
     specialCharPreference = window.prompt("Would you like special characters in your password? Please enter yes or no.");
   }
   if (uppercasePreference === "yes" || lowercasePreference === "yes" || numericPreference === "yes" || specialCharPreference === "yes") {
-    console.log(lengthPerference);
-    for (var i = 0; i <= lengthPerference; i++) {
+    console.log(lengthPreference);
+    for (var i = 0; i <= lengthPreference; i++) {
   
       //generates a random integer between 1-25, and then shifts the random number by +97 into the lowercase section of ASCII value)
       //appends the randomly generated character to the password string
@@ -82,8 +82,13 @@ var generatePassword = function() {
   } else {
     window.alert("Please ensure at least ONE of the prompts is answered yes") 
   }
-  console.log(password);
   return password;
+  //split the string in the password into an array
+
+  //shuffle array
+
+  //get random elements from the array
+ 
 }
 
 
@@ -96,7 +101,6 @@ var generateBtn = document.querySelector("#generate");
 function writePassword() {
   //displays the password generated in the password box 
   var password = generatePassword();
-  console.log(password,"---","---");
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 }
