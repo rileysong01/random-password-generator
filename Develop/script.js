@@ -4,11 +4,13 @@ var uppercasePreference = true;
 var lowercasePreference = true;
 var numericPreference = true;
 var specialCharPreference = true;
-var password = "";
+var passwordDepo = "";
+var passwordArray = [];
+var almostPassword = [];
 
 var specialCharacters = ["!","@", "#", "$", "%","&", "*", "_", "-","?"];
 
-
+//string to array function 
 
 var generatePassword = function() {
 
@@ -19,7 +21,6 @@ var generatePassword = function() {
   }
   while (!(Number.isInteger(lengthPreference)) || lengthPreference < 8 || lengthPreference > 128) {
     lengthPreference = parseInt(window.prompt("Please enter number between 8 and 128."))
-    console.log(lengthPreference);
     if (!lengthPreference) //why not cancelling??
     return ;
   }
@@ -60,35 +61,45 @@ var generatePassword = function() {
     specialCharPreference = window.prompt("Would you like special characters in your password? Please enter yes or no.");
   }
   if (uppercasePreference === "yes" || lowercasePreference === "yes" || numericPreference === "yes" || specialCharPreference === "yes") {
-    console.log(lengthPreference);
     for (var i = 0; i <= lengthPreference; i++) {
   
-      //generates a random integer between 1-25, and then shifts the random number by +97 into the lowercase section of ASCII value)
-      //appends the randomly generated character to the password string
       if (lowercasePreference === "yes") {
-        password = password + String.fromCharCode(Math.floor(Math.random()*26 + 97));
+        passwordDepo = passwordDepo + String.fromCharCode(Math.floor(Math.random()*26 + 97));
         i++
       }
       if (uppercasePreference === "yes") {
-        password = password + String.fromCharCode(Math.floor(Math.random()*26 + 65));
+        passwordDepo = passwordDepo + String.fromCharCode(Math.floor(Math.random()*26 + 65));
       }
       if (numericPreference === "yes") {
-        password = password +String.fromCharCode(Math.floor(Math.random()*10 + 48));
+        passwordDepo = passwordDepo +String.fromCharCode(Math.floor(Math.random()*10 + 48));
       }
       if (specialCharPreference === "yes") {
-        password = password + specialCharacters[Math.floor(Math.random()*10)];
+        passwordDepo = passwordDepo + specialCharacters[Math.floor(Math.random()*10)];
       }
     }
+
   } else {
     window.alert("Please ensure at least ONE of the prompts is answered yes") 
   }
-  return password;
-  //split the string in the password into an array
 
-  //shuffle array
+//split password into string and shuffle
+passwordArray =(function(input) {
+    const array = input.split('');
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+})(passwordDepo);
 
-  //get random elements from the array
- 
+
+//get the right number of characters from the array
+almostPassword = passwordArray.slice(0, lengthPreference)
+
+//turn password from array back to string
+password = almostPassword.join('')
+
+return password;
 }
 
 
