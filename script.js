@@ -1,12 +1,13 @@
 // declare variables
 var lengthPreference = 0;
-var uppercasePreference = true;
-var lowercasePreference = true;
-var numericPreference = true;
-var specialCharPreference = true;
+var uppercasePreference 
+var lowercasePreference 
+var numericPreference 
+var specialCharPreference 
 var passwordDepo = "";
 var passwordArray = [];
 var almostPassword = [];
+var promptCounter = 0;
 
 var specialCharacters = ["!", "@", "#", "$", "%", "&", "*", "_", "-", "?"];
 
@@ -26,7 +27,7 @@ var generatePassword = function () {
 
 
   // prompt asking for uppercase
-  uppercasePreference = window.prompt("Would you like uppercase letters in your password? Please enter yes or no.");
+  uppercasePreference = window.prompt("Would you like uppercase letters in your password? Please enter yes or no.").toLowerCase();
   if (uppercasePreference !== "yes" && uppercasePreference !== "no") {
     alert("Error: please enter yes or no");
   }
@@ -34,10 +35,12 @@ var generatePassword = function () {
     uppercasePreference = window.prompt("Would you like uppercase letters in your password? Please enter yes or no.");
     if (!uppercasePreference)
       return;
+  } if (uppercasePreference === "yes") {
+    promptCounter++;
   }
 
   // prompt asking for lowercase
-  lowercasePreference = window.prompt("Would you like lowercase letters in your password? Please enter yes or no.");
+  lowercasePreference = window.prompt("Would you like lowercase letters in your password? Please enter yes or no.").toLowerCase();
   if (lowercasePreference !== "yes" && lowercasePreference !== "no") {
     alert("Error: please enter yes or no");
   }
@@ -45,10 +48,12 @@ var generatePassword = function () {
     lowercasePreference = window.prompt("Would you like lowercase letters in your password? Please enter yes or no.");
     if (!lowercasePreference)
       return;
+  } if (lowercasePreference === "yes") {
+    promptCounter++;
   }
 
   // prompt asking for numbric
-  numericPreference = window.prompt("Would you like numbers in your password? Please enter yes or no.");
+  numericPreference = window.prompt("Would you like numbers in your password? Please enter yes or no.").toLowerCase();
   if (numericPreference !== "yes" && numericPreference !== "no") {
     alert("Error: please enter yes or no");
   }
@@ -56,10 +61,12 @@ var generatePassword = function () {
     numericPreference = window.prompt("Would you like numbers in your password? Please enter yes or no.");
     if (!numericPreference)
       return;
+  } if (numericPreference === "yes") {
+    promptCounter++;
   }
 
   //prompt asking for special characters
-  specialCharPreference = window.prompt("Would you like special characters in your password? Please enter yes or no.");
+  specialCharPreference = window.prompt("Would you like special characters in your password? Please enter yes or no.").toLowerCase();
   if (specialCharPreference !== "yes" && specialCharPreference !== "no") {
     alert("Error: please enter yes or no");
   }
@@ -67,11 +74,17 @@ var generatePassword = function () {
     specialCharPreference = window.prompt("Would you like special characters in your password? Please enter yes or no.");
     if (!specialCharPreference)
       return;
+  } if (specialCharPreference === "yes") {
+    promptCounter++;
   }
 
-  //generate password conditions
+  //count # of prompts user said yes to 
+  console.log(promptCounter);
 
-  if (uppercasePreference === "yes" || lowercasePreference === "yes" || numericPreference === "yes" || specialCharPreference === "yes") {
+  //generate password conditions
+  if (promptCounter === 0) {
+    window.alert("Please ensure at least ONE of the prompts is answered yes")
+  } else {
     for (var i = 0; i <= lengthPreference; i++) {
 
       if (lowercasePreference === "yes") {
@@ -89,9 +102,9 @@ var generatePassword = function () {
       }
     }
 
-  } else {
-    window.alert("Please ensure at least ONE of the prompts is answered yes")
-  }
+  } 
+
+  //take first 
 
   //split password into string and shuffle
   passwordArray = (function (input) {
