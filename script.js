@@ -1,18 +1,18 @@
-// declare variables
-var lengthPreference = 0;
-var uppercasePreference 
-var lowercasePreference 
-var numericPreference 
-var specialCharPreference 
-var passwordDepo = "";
-var passwordArray = [];
-var almostPassword = [];
-var promptCounter = 0;
-
-var specialCharacters = ["!", "@", "#", "$", "%", "&", "*", "_", "-", "?"];
-
-
 var generatePassword = function () {
+
+  //declare variables
+  var lengthPreference = 0;
+  var uppercasePreference = "";
+  var lowercasePreference = "";
+  var numericPreference = "";
+  var specialCharPreference = "";
+  var passwordDepo = "";
+  var firstPasswordDepoChars = "";
+  var remainingPasswordDecoChars = "";
+
+  var almostPassword = [];
+  var promptCounter = 0;
+  var specialCharacters = ["!", "@", "#", "$", "%", "&", "*", "_", "-", "?"];
 
   // prompt asking for character length
   lengthPreference = parseInt(window.prompt("How long do you want your password to be? Please enter number between 8 and 128."))
@@ -85,11 +85,10 @@ var generatePassword = function () {
   if (promptCounter === 0) {
     window.alert("Please ensure at least ONE of the prompts is answered yes")
   } else {
-    for (var i = 0; i <= lengthPreference; i++) {
+    for (var i = 0; i < lengthPreference; i++) {
 
       if (lowercasePreference === "yes") {
         passwordDepo = passwordDepo + String.fromCharCode(Math.floor(Math.random() * 26 + 97));
-        i++
       }
       if (uppercasePreference === "yes") {
         passwordDepo = passwordDepo + String.fromCharCode(Math.floor(Math.random() * 26 + 65));
@@ -101,28 +100,35 @@ var generatePassword = function () {
         passwordDepo = passwordDepo + specialCharacters[Math.floor(Math.random() * 10)];
       }
     }
+  }
 
-  } 
 
-  //take first 
 
-  //split password into string and shuffle
-  passwordArray = (function (input) {
-    const array = input.split('');
-    for (let i = array.length - 1; i > 0; i--) {
+  //ensure at least 1 character from every prompt selected by user is incorporated into password
+  //make array of first # of characters must be used
+  firstPasswordDepoChars = (passwordDepo.slice(0, promptCounter)).split("");
+
+
+  //split the rest into array 
+  remainingPasswordDecoChars = (passwordDepo.slice(-(lengthPreference * promptCounter - promptCounter)).split(""));
+  console.log(firstPasswordDepoChars);
+  console.log(remainingPasswordDecoChars);
+
+  //shuffle array function
+  function getShuffled(array, numberOfElements) {
+    const shuffledArray = array.slice();
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
     }
-    return array;
-  })(passwordDepo);
+    return shuffledArray.slice(0, numberOfElements);
+  }
+  //randomly select # other characters
+  var secondPartShuffled = getShuffled(remainingPasswordDecoChars, (lengthPreference - promptCounter));
 
-
-  //get the right number of characters from the array
-  almostPassword = passwordArray.slice(0, lengthPreference)
-
-  //turn password from array back to string
-  password = almostPassword.join('')
-
+  //shuffle and returnfinal password
+  almostPassword = firstPasswordDepoChars.concat(secondPartShuffled);
+  password = (getShuffled(almostPassword, lengthPreference)).join("");
   return password;
 }
 
